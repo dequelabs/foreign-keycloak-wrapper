@@ -24,6 +24,6 @@ $ brew services restart postgresql
 
 ### Troubleshooting
 #### On mac...
-edit Makefile, line (93), change darwin to Darwin
+edit Makefile (line 93), change darwin to Darwin
 make
 sudo ARCHFLAGS="-arch x86_64" make install
