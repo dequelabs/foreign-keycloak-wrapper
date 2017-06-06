@@ -2,7 +2,7 @@
    "name": "foreign-keycloak-wrapper",
    "abstract": "PostgreSQL foreign data wrapper for keycloak's REST API",
    "description": "Keycloak multicorn foreign data wrapper extension for the admin REST API ",
-   "version": "0.1.1",
+   "version": "1.0.0",
    "maintainer": [
       "Harris Schneiderman <harris.schneiderman@deque.com>",
       "Dian Fay <dian.fay@deque.com>"
