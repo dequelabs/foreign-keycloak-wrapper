@@ -1,3 +1,5 @@
+LOOKING FOR NEW OWNER OF THIS REPO -- SEE [ISSUE #2](https://github.com/schne324/foreign-keycloak-wrapper/issues/2)
+
 # Keycloak Single Sign-On Foreign Data Wrapper
 
 [Keycloak](https://www.keycloak.org) is an open-source single sign-on and identity management provider. This foreign data wrapper allows PostgreSQL databases to federate Keycloak realms as foreign tables in order to query user information alongside application data.
