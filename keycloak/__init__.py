@@ -91,7 +91,7 @@ class Keycloak(ForeignDataWrapper):
       #
 
       headers = {'Authorization': 'Bearer %s' % token, 'Content-Type': 'application/json'}
-      getUsersURL = '%s/auth/admin/realms/%s/users' % (self.url, self.realm)
+      getUsersURL = '%s/auth/admin/realms/%s/users?max=99999' % (self.url, self.realm)
       usersResponse = get(getUsersURL, headers=headers)
       usersData = usersResponse.json()
 
