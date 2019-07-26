@@ -2,7 +2,7 @@
    "name": "foreign-keycloak-wrapper",
    "abstract": "PostgreSQL foreign data wrapper for keycloak's REST API",
    "description": "Keycloak multicorn foreign data wrapper extension for the admin REST API ",
-   "version": "1.0.0",
+   "version": "1.0.1",
    "maintainer": [
       "Harris Schneiderman <harris.schneiderman@deque.com>",
       "Dian Fay <dian.fay@deque.com>"
@@ -27,7 +27,7 @@
    },
    "generated_by": "Harris Schneiderman",
    "meta-spec": {
-      "version": "1.0.0",
+      "version": "1.0.1",
       "url": "http://pgxn.org/meta/spec.txt"
    },
    "tags": [
