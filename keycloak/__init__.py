@@ -9,6 +9,8 @@ class Keycloak(ForeignDataWrapper):
   def __init__(self, options, columns):
     super(Keycloak, self).__init__(options, columns)
 
+    self.batchSize = 500
+
     self.validate(options, columns)
 
     self.columns = columns
@@ -63,41 +65,53 @@ class Keycloak(ForeignDataWrapper):
 
     log(message = error, level = logging.ERROR)
 
+  def getUserCount(self):
+      token = self.getToken()
+      headers = {'Authorization': 'Bearer %s' % token, 'Content-Type': 'application/json'}
+      getUserCountURL = '%s/auth/admin/realms/%s/users/count' % (self.url, self.realm)
+      userCountResponse = get(getUserCountURL, headers=headers)
+      log(message = userCountResponse.text, level = logging.WARNING)
+      return userCountResponse.text
+
+  def getUsers(self, batchStart):
+      token = self.getToken()
+      headers = {'Authorization': 'Bearer %s' % token, 'Content-Type': 'application/json'}
+      getUsersURL = '%s/auth/admin/realms/%s/users?first=%s&max=%s' % (self.url, self.realm,batchStart,self.batchSize)
+      usersResponse = get(getUsersURL, headers=headers)
+      log(message = getUsersURL, level = logging.WARNING)
+      usersData = usersResponse.json()
+      return usersData
+
+  def getToken(self):
+      requestURL = '%s/auth/realms/%s/protocol/openid-connect/token' % (self.url, self.realm)
+      requestBody = {
+        'username': self.username,
+        'password': self.password,
+        'client_id': self.client_id,
+        'grant_type': self.grant_type,
+        'client_secret': self.client_secret
+      }
+      tokenResponse = post(requestURL, data=requestBody)
+      tokenData = tokenResponse.json()
+
+      if 'error' in tokenData:
+        self.handle_error(tokenData)
+      else:
+        # we've got an access token to use in the users request
+        token = tokenData['access_token']
+        return token
 
   def execute(self, quals, columns):
-    #
-    # Request 1 of 2: Get direct access token
-    #
+    # let get the token followed by the number of users
+    userCount = int(self.getUserCount())
 
-    requestURL = '%s/auth/realms/%s/protocol/openid-connect/token' % (self.url, self.realm)
-    requestBody = {
-      'username': self.username,
-      'password': self.password,
-      'client_id': self.client_id,
-      'grant_type': self.grant_type,
-      'client_secret': self.client_secret
-    }
-    tokenResponse = post(requestURL, data=requestBody)
-    tokenData = tokenResponse.json()
+    for batchStart in range(1,userCount,self.batchSize):
+        log(message = batchStart, level = logging.WARNING)
+        usersData = self.getUsers(batchStart)
 
-    if 'error' in tokenData:
-      self.handle_error(tokenData)
-    else:
-      # we've got an access token to use in the users request
-      token = tokenData['access_token']
-
-      #
-      # Request 2 of 2: Get users
-      #
-
-      headers = {'Authorization': 'Bearer %s' % token, 'Content-Type': 'application/json'}
-      getUsersURL = '%s/auth/admin/realms/%s/users?max=99999' % (self.url, self.realm)
-      usersResponse = get(getUsersURL, headers=headers)
-      usersData = usersResponse.json()
-
-      if 'error' in usersData:
-        self.handle_error(usersData)
-      else:
-        for entry in usersData:
-          entry['organization_id'] = self.organization_id
-          yield entry
+        if 'error' in usersData:
+          self.handle_error(usersData)
+        else:
+          for entry in usersData:
+            entry['organization_id'] = self.organization_id
+            yield entry
