@@ -65,25 +65,40 @@ class Keycloak(ForeignDataWrapper):
 
     log(message = error, level = logging.ERROR)
 
+  # Get Users Count
   def getUserCount(self):
       token = self.getToken()
+
       headers = {'Authorization': 'Bearer %s' % token, 'Content-Type': 'application/json'}
+
       getUserCountURL = '%s/auth/admin/realms/%s/users/count' % (self.url, self.realm)
+
       userCountResponse = get(getUserCountURL, headers=headers)
+
       log(message = userCountResponse.text, level = logging.WARNING)
+
       return userCountResponse.text
 
+  # retrieve users in batches
   def getUsers(self, batchStart):
       token = self.getToken()
+
       headers = {'Authorization': 'Bearer %s' % token, 'Content-Type': 'application/json'}
+
       getUsersURL = '%s/auth/admin/realms/%s/users?first=%s&max=%s' % (self.url, self.realm,batchStart,self.batchSize)
+
       usersResponse = get(getUsersURL, headers=headers)
+
       log(message = getUsersURL, level = logging.WARNING)
+
       usersData = usersResponse.json()
+
       return usersData
 
+  # retrieve the Bearer token to be used for communication with KeyCloak
   def getToken(self):
       requestURL = '%s/auth/realms/%s/protocol/openid-connect/token' % (self.url, self.realm)
+
       requestBody = {
         'username': self.username,
         'password': self.password,
@@ -91,7 +106,9 @@ class Keycloak(ForeignDataWrapper):
         'grant_type': self.grant_type,
         'client_secret': self.client_secret
       }
+
       tokenResponse = post(requestURL, data=requestBody)
+
       tokenData = tokenResponse.json()
 
       if 'error' in tokenData:
