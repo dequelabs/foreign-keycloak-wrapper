@@ -122,7 +122,7 @@ class Keycloak(ForeignDataWrapper):
     # let get the token followed by the number of users
     userCount = int(self.getUserCount())
 
-    for batchStart in range(1,userCount,self.batchSize):
+    for batchStart in range(0,userCount,self.batchSize):
         log(message = batchStart, level = logging.WARNING)
         usersData = self.getUsers(batchStart)
 
