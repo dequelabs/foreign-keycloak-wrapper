@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name     = "keycloak",
-  version      = "1.0.0",
+  version      = "1.0.1",
   description  = "PostgreSQL foreign data wrapper for keycloak's REST api",
   author       = "Harris Schneiderman",
   author_email = "harris.schneiderman@deque.com",
