@@ -1,38 +1,34 @@
 {
-   "name": "foreign-keycloak-wrapper",
-   "abstract": "PostgreSQL foreign data wrapper for keycloak's REST API",
-   "description": "Keycloak multicorn foreign data wrapper extension for the admin REST API ",
-   "version": "1.0.1",
-   "maintainer": [
-      "Harris Schneiderman <harris.schneiderman@deque.com>",
-      "Dian Fay <dian.fay@deque.com>"
-   ],
-   "license": "mit",
-   "prereqs": {
-      "runtime": {
-         "requires": {
-            "plpgsql": 0,
-            "PostgreSQL": "9.2.0"
-         },
-         "recommends": {
-            "PostgreSQL": "8.4.0"
-         }
+  "name": "foreign-keycloak-wrapper",
+  "abstract": "PostgreSQL foreign data wrapper for keycloak's REST API",
+  "description": "Keycloak multicorn foreign data wrapper extension for the admin REST API ",
+  "version": "1.0.2",
+  "maintainer": [
+    "Harris Schneiderman <harris.schneiderman@deque.com>",
+    "Dian Fay <dian.fay@deque.com>"
+  ],
+  "license": "mit",
+  "prereqs": {
+    "runtime": {
+      "requires": {
+        "plpgsql": 0,
+        "PostgreSQL": "9.2.0"
+      },
+      "recommends": {
+        "PostgreSQL": "8.4.0"
       }
-   },
-   "provides": {
-     "keycloak": {
-       "file": "keycloak/__init__.py",
-       "version": "0.1.1"
-     }
-   },
-   "generated_by": "Harris Schneiderman",
-   "meta-spec": {
-      "version": "1.0.1",
-      "url": "http://pgxn.org/meta/spec.txt"
-   },
-   "tags": [
-      "keycloak",
-      "multicorn",
-      "foreign data wrapper"
-   ]
+    }
+  },
+  "provides": {
+    "keycloak": {
+      "file": "keycloak/__init__.py",
+      "version": "0.1.1"
+    }
+  },
+  "generated_by": "Harris Schneiderman",
+  "meta-spec": {
+    "version": "1.0.2",
+    "url": "http://pgxn.org/meta/spec.txt"
+  },
+  "tags": ["keycloak", "multicorn", "foreign data wrapper"]
 }
