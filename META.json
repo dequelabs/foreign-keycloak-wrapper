@@ -27,7 +27,7 @@
   },
   "generated_by": "Harris Schneiderman",
   "meta-spec": {
-    "version": "1.0.2",
+    "version": "1.0.0",
     "url": "http://pgxn.org/meta/spec.txt"
   },
   "tags": ["keycloak", "multicorn", "foreign data wrapper"]
